@@ -128,8 +128,8 @@
     Student.prototype.gender = 'f'
     Student.prototype.study = fucntion() { console.log('我在学习...')}
 
-    var studentA = new Student('xiaohong',17,'f')
-    var studentB = new Student('xiaoming',18,'m')
+    var studentA = new Student()
+    var studentB = new Student()
     studentA.study == studentA.study  // true
 
 这样，就能解决函数重复声明的问题，所有的实例，都共享原型上的函数study.然而，函数是共享了没错，
