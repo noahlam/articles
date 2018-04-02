@@ -8,7 +8,8 @@
 请顺便给我Star,你们的支持是我最大的动力，谢谢!
 
 好了，我们进入主题，首先，请允许引用一下美团官方对mpvue的介绍
-> mpvue是一个使用 Vue.js 开发小程序的前端框架。框架基于 Vue.js 核心，mpvue 修改了 Vue.js 的 runtime 和 compiler 实现，使其可以运行在小程序环境中，从而为小程序开发引入了整套 Vue.js 开发体验。
+> mpvue是一个使用 Vue.js 开发小程序的前端框架。框架基于 Vue.js 核心，mpvue 修改了 Vue.js 
+的 runtime 和 compiler 实现，使其可以运行在小程序环境中，从而为小程序开发引入了整套 Vue.js 开发体验。
 
 ### 主要特性
 >使用 mpvue 开发小程序，你将在小程序技术体系的基础上获取到这样一些能力：
@@ -26,7 +27,8 @@
 
     npm install --g vue-cli
 
-安装完vue-cli以后，我们就可以运行一下命令，来自动构建一个项目（期间会询问你是否使用一些工具/插件，请根据自己的实际情况选择y或n,对于不懂得该选y还是n的，统统选n）
+安装完vue-cli以后，我们就可以运行一下命令，来自动构建一个项目（期间会询问你是否使用一些工具/插件，
+请根据自己的实际情况选择y或n,对于不懂得该选y还是n的，统统选n）
 
     vue init mpvue/mpvue-quickstart test-wxapp
 
@@ -42,9 +44,95 @@
 项目就跑起来了，这个时候，我们打开微信开发者工具，选择小程序，然后新建一个，项目目录填
 我们项目目录下的`dist`目录 `test-wxapp/dist`,就可以看到效果了
 
-到此为止，一个基本的项目就完成了，但是，本文的目的不是让你学会搭一个空项目的，空项目的话，我觉得官方教程做的已经够好了。
+到此为止，一个基本的项目就完成了，但是，本文的目的不是让你学会搭一个空项目的，
+空项目的话，我觉得官方教程做的已经够好了。
 接下来，我们来删掉几个示例文件，然后一步步添加页面
 
+
+
+
+
+在小程序的环境下面，要想发送一个外部请求，我们只能使用小程序官方提供的wx.request方法，
+但是该方法的代码风跟跟Jquery年代的Ajax一样，都散靠回调来处理请求响应，如果有很多层回调，
+就会有很多层嵌套，这让我们这些平时被async-await惯坏的人怎么接受？
+
+所以，建完基本项目，我们要做的第一件事，就是用wx.request自己封装一个基于promise的异步请求方法。
+我们先来看一下 wx.request的一个官方示例代码
+
+    wx.request({
+      url: 'test.php', //仅为示例，并非真实的接口地址
+      data: {
+         x: '' ,
+         y: ''
+      },
+      header: {
+          'content-type': 'application/json' // 默认值
+      },
+      success: function(res) {
+        console.log(res.data)
+      }
+    })
+
+可以看到，每次请求都要发送一大堆的东西，重点少这些东西里面，很可能对于一个项目来说，
+绝大部分都是固定不变的，那这样，不是冗余了么。
+
+> tip: 更多wx.request参数，请参考 [微信官方文档](https://developers.weixin.qq.com/miniprogram/dev/api/network-request.html)
+
+我们分析一下，第一个参数是url,也就是我们请求的地址，这个应该是每次都不一样的，但是，不一样的应该也只是url的最后一部分，
+接口名称的位置不一样，前面的服务器地址一般都是一样的，例如`http://www.abc.com/api/member/login` 对于同一个项目的所有接口
+服务器地址`http://www.abc.com/api/`应该都是一样的，不一样的只是后妈的接口名称`member/login`, 
+那我们可以把url拆分成 `服务器地址` + `接口名称`，这样做也方便后期上线的时候，切换服务器地址。
+
+第二个参数是请求的参数，请求的参数应该是每次都不一样的，所以这个我们就不做修改（事实上实际应用中，
+经常有可能出现需要每个接口都带一个token的，我们也可以在这里统一加上去，不过这里就不做深入）
+
+第三个参数是 请求头，这个一般同一个项目里面，这些都是一样的，所以我们就写死。 这里还有一个参数`method`请求方法，
+这里因为使用默认值GET，所以就没列出，我们这边需要做设置，因为现在前后分离的模式，现在基本上大部分都是POST请求，所以我们这边也写死成method:'POST'
+
+最后一个就是处理请求结果回调函数，示例里面只有一个请求成功的回调，其实我们应该再加一个请求实例的处理函数，
+ `fail`，而我们封装这个函数的重点，就是要用promise来处理这两个回调函数，使它们可以用async-await的语法
+
+
+    // 假设以下代码在 `/src/utils/requestMethod.js`
+    
+    let serverPath = 'http://www.abc.com/api/'
+    export function post(url,body) {
+        return new Promise((resolve,reject) => {
+            wx.request({
+                  url: serverPath + url    // 拼接完整的url
+                  data: body
+                  method:'POST',
+                  header: {
+                      'content-type': 'application/json'
+                  },
+                  success(res) {
+                    resolve(res.data)  // 把返回的数据传出去
+                  },
+                  fail(ret) {
+                    reject(ret)   // 把错误信息传出去
+                  }
+                })
+        })
+    }
+    
+
+有了这样的封装，我们就可以在其他地方引入 上面这个文件，然后使用post函数请求
+    
+    import {post} from '/src/utils/requestMethod.js'
+    // 需要注意的是，这行代码必须要在async修饰的函数里面才能正确调用
+    let res = await post('member/login',{name:myname})  
+
+如果你觉得每次都要import这个文件很麻烦,那我们也可以把它挂在到Vue(mpvue)的原型(prototype)上，我们打开`/src/main.js`文件，然后在里面加入以下代码
+    
+    import {post} from '/src/utils/requestMethod.js'
+    Vue.prototype.$post = post
+
+这样，我们就可以在Vue(mpvue)的所有实例里面，直接使用 this.$post()来调用，只要一行代码，
+    
+    // 这行代码同样需要在async修饰的函数里面才能正确调用
+    let res = await this.$post('member/login',{name:myname})  
+    
+怎么样？是不是比原生的方便很多呢？
 
 当然，跑起来以后，你可能还会遇到各种问题，这里我有对我自己遇到的问题做了一些总结
 [美团小程序框架mpvue蹲坑指南](https://github.com/noahlam/articles/blob/master/%E7%BE%8E%E5%9B%A2%E5%B0%8F%E7%A8%8B%E5%BA%8F%E6%A1%86%E6%9E%B6mpvue%E8%B9%B2%E5%9D%91%E6%8C%87%E5%8D%97.md)，希望对你有帮助,
