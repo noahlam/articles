@@ -75,12 +75,80 @@
 ，这些配置，最终都会被打包到原生小程序的`app.json`，对这些配置不了解的，建议看一下微信方法的小程序文档，这里不做赘述。
 
 我们先把`/src/pages` 下面的`counter`和`logs`两个文件夹删掉，只保留一个`index` ,顺便把 `/src/components` 文件夹下面的文件也全删掉,
-然后把`/src/main.js` 里面的 `config.pages`里面多余的路由也删掉，只保留一条`['^pages/index/main']`,这样目前就只有有给index页面，
+然后把`/src/main.js` 里面的 `config.pages`里面多余的路由也删掉，只保留一条`['^pages/index/main']`,这样目前就只有个index页面，
 
+然后我们打开`/src/pages/index/index.vue` 我们把里面多余的代码删掉，只保留一个基础骨架
 
+    <template>
+      <div class="container">
+           我是首页
+      </div>
+    </template>
 
+    <script>
 
+    export default {
+      data () {
+        return { }
+      },
+      methods: {},
 
+      created () {}
+    }
+    </script>
+
+    <style scoped>
+
+    </style>
+
+> tip `/src/utils/index.js` 是一个公共函数库，里面只有一个简单的格式化日期函数，不要也可以删掉
+
+到目前为止，一个干净的空项目就算是ok了，接下来我们来对微信原生的一些反人类的东西来做一下优化。
+
+一、先用mptoast组件代替官方提供的wx.showToast, wx.showToast诸多不便我就不说了，关键是还有坑
+小程序基础库比较低的，不管你怎么设置，总是会在弹窗里面加一个钩钩，有时候我想弹出错误消息也是打钩，
+严重误导用户，字数上还有限制有带icon的不能超过7个字，你说说，你说说 7个字够干嘛的，
+那我们来看看mptoast,据[官方介绍](https://github.com/noahlam/mpvue-toast)mptoast具有轻量，配置少，冗余少，使用简单，可定制性强等特点
+
+我们开根据官方介绍，从npm引入并配置
+
+    npm i vuex
+    npm i mptoast -D
+
+在项目的主配置文件（一般位于src/main.js）加入以下代码
+
+    import mpvueToastRegistry from 'mptoast'
+    mpvueToastRegistry(Vue)
+
+在你需要弹窗的页面，引入组件，并注册，然后在页面内加入一个你注册的组件，就可以在js里面调用this.$mptoast()了， 以下是一个简单的实例
+
+    <template>
+      <div>
+        <-- 省略其他代码 -->
+        <mptoast />
+      </div>
+    </template>
+
+    <script>
+    import mptoast from 'mptoast'
+
+    export default {
+      components: {
+        mptoast
+      },
+      data () {
+        return {}
+      },
+      methods: {
+        showToast () {
+          this.$mptoast('我是提示信息')
+        },
+      }
+    }
+    </script>
+使用起来还是蛮简单的
+
+二，用promise封装异步请求函数
 在小程序的环境下面，要想发送一个外部请求，我们只能使用小程序官方提供的wx.request方法，
 但是该方法的代码风跟跟Jquery年代的Ajax一样，都散靠回调来处理请求响应，如果有很多层回调，
 就会有很多层嵌套，这让我们这些平时被async-await惯坏的人怎么接受？
