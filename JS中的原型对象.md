@@ -113,3 +113,7 @@ hasOwnProperty方法可以检测到实例对象里面有没有给定的属性，
 2. 判断一个构造函数是否是`指定实例对象`的原型
 
     `Student.prototype.isPrototypeOf(studentA) // true`
+
+好了，关于原型对象的话题，就到这里了，感谢收看！
+
+如果觉得对您有用，请给本文的[github](https://github.com/noahlam/articles)加个star,万分感谢，另外，github上还有其他一些关于前端的教程和组件，有兴趣的童鞋可以看看，你们的支持就是我最大的动力。
