@@ -117,7 +117,7 @@
 
 在项目的主配置文件（一般位于src/main.js）加入以下代码
 
-    import mpvueToastRegistry from 'mptoast'
+    import mpvueToastRegistry from 'mptoast/registry'
     mpvueToastRegistry(Vue)
 
 在你需要弹窗的页面，引入组件，并注册，然后在页面内加入一个你注册的组件，就可以在js里面调用this.$mptoast()了， 以下是一个简单的实例
