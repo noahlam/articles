@@ -19,18 +19,18 @@
 事实上,以上就是js里面的**原型链继承**
 
 当然,通过以上代码,我们的Student只是继承了一个空壳的Person,这样视乎是毫无意义的,我们使用继承的目的,
-就是要通过继承获取父类的内容,那我们先给父类加上一点点简单的内容:
+就是要通过继承获取父类的内容,那我们先给父类加上一点点简单的内容(新增的地方标记 '// 新增的代码'):
 
     // 父类
     function Person(name,age) {
-      this.name = name || 'unknow'     // 这个是新添加的
-      this.age = age || 0              // 这个是新添加的
+      this.name = name || 'unknow'     // 新增的代码
+      this.age = age || 0              // 新增的代码
     }
 
     // 子类
     function Student(name){
-      this.name = name                 // 这个是新添加的
-      this.score = 80                  // 这个是新添加的
+      this.name = name                 // 新增的代码
+      this.score = 80                  // 新增的代码
     }
 
     // 继承
@@ -45,7 +45,7 @@
     console.log(stu.score) // 80      --子类自己的属性
 
 这里为了降低复杂度,我们只演示了普通属性的继承,没有演示方法的继承,事实上,方法的继承也很简单,
-我们来稍微修改一下代码,给上面的父类和子类分别加一个方法
+我们再来稍微修改一下代码,基于上面的代码,给父类和子类分别加一个方法(新增的地方标记 '// 新增的代码')
 
     // 父类
     function Person(name,age) {
@@ -54,7 +54,7 @@
     }
 
     // 为父类新曾一个方法
-    Person.prototype.say = function() {         // 这个是新添加的
+    Person.prototype.say = function() {         // 新增的代码
         console.log('I am a person')
     }
 
@@ -68,7 +68,7 @@
     Student.prototype = new Person()
 
     // 为子类新增一个方法(在继承之后,否则会被覆盖)
-    Student.prototype.study = function () {     // 这个是新添加的
+    Student.prototype.study = function () {     // 新增的代码
         console.log('I am studing')
     }
 
@@ -84,5 +84,5 @@
 
 这样,看起来我们好像已经完成了一个完整的继承了,这个就是**原型链继承**,怎么样,是不是很好理解?
 但是,原型链继承有一个缺点,就是属性如果是引用类型的话,会共享引用类型,请看以下代码
-
+原型链继承缺点 引用属性是所有实例共享的
 ---未完待续---
