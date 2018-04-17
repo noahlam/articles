@@ -84,5 +84,100 @@
 
 这样,看起来我们好像已经完成了一个完整的继承了,这个就是**原型链继承**,怎么样,是不是很好理解?
 但是,原型链继承有一个缺点,就是属性如果是引用类型的话,会共享引用类型,请看以下代码
-原型链继承缺点 引用属性是所有实例共享的
+
+    // 父类
+    function Person() {
+      this.hobbies = ['music','reading']
+    }
+
+    // 子类
+    function Student(){}
+
+    // 继承
+    Student.prototype = new Person()
+
+使用
+
+    var stu1 = new Student()
+    var stu2 = new Student()
+
+    stu1.hobbies.push('basketball')
+
+    console.log(stu1.hobbies)   // music,reading,basketball
+    console.log(stu2.hobbies)   // music,reading,basketball
+
+我们可以看到,当我们改变stu1的引用类型的属性时,stu2对应的属性,也会跟着更改,这就是**原型链继承缺点** --引用属性会被所有实例共享,
+那我们如何解决这个问题呢? 就是下面我们要提到的**借用构造函数继承**,我们来看一下使用构造函数继承的最简单例子:
+
+    // 父类
+    function Person() {
+      this.hobbies = ['music','reading']
+    }
+
+    // 子类
+    function Student(name){
+        Person.call(this)              // 新增的代码
+    }
+
+使用
+
+    var stu1 = new Student()
+    var stu2 = new Student()
+
+    stu1.hobbies.push('basketball')
+    console.log(stu1.hobbies)   // music,reading,basketball
+    console.log(stu2.hobbies)   // music,reading
+
+这样,我们就解决了引用类型被所有实例共享的问题了
+
+> 注意,这里跟 原型链继承 有个比较明显的区别是并没有使用prototype继承,而是在子类里面执行父类的构造函数,
+相当于把父类的代码复制到子类里面执行一遍,这样做的另一个好处就是可以给父类传参
+
+    // 父类
+    function Person(name) {
+      this.name = name              // 新增的代码
+    }
+
+    // 子类
+    function Student(name){
+        Person.call(this,name)      // 改动的代码
+    }
+
+使用
+
+    var stu1 = new Student('lucy')
+    var stu2 = new Student('lili')
+    console.log(stu1.name)   // lucy
+    console.log(stu2.name)   // lili
+
+看起来已经很有Java,C#的味道了有没有?
+
+但是,构造函数解决了引用类型被所有实例共享的问题,但正是因为解决了这个问题,导致一个很矛盾的问题出现了,**--函数也是引用类型**,
+也没办法共享了.也就是说,每个实例里面的函数,虽然功能一样,但是却不是同一个函数,就相当于我们每实例化一个子类,就复制了一遍的函数代码
+
+    // 父类
+    function Person(name) {
+      this.say = function() {}    // 改动的代码
+    }
+
+    // 子类
+    function Student(name){
+        Person.call(this,name)
+    }
+
+使用
+
+    var stu1 = new Student('lucy')
+    var stu2 = new Student('lili')
+    console.log(stu1.say === stu2.say)   // false
+
+以上代码可以证明,父类的函数,在子类的实例下是不共享的
+
+#### 总结
+|  继承方式   |   继承核心代码   |   优缺点   |
+|------------|---------------|----------|
+|  原型链继承   |   `Student.prototype = new Person()`   |   实例的引用类型共享   |
+|  构造函数继承   |   在子类(Student)里执行 `Person.call(this)`   |   实例的引用类型不共享   |
+
+我们知道了 `原型链继承` 和 `构造函数继承` 这两个互相矛盾的
 ---未完待续---
