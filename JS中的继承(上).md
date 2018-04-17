@@ -1,4 +1,4 @@
-### JS中的继承
+### JS中的继承(上)
 
 > 学过java或者c#之类语言的同学,应该会对js的继承感到很困惑--不要问我怎么知道的,js的继承主要是基于原型(prototype)的,对js的原型感兴趣的同学,
 可以了解一下我之前写的[JS中的原型对象](https://github.com/noahlam/articles/blob/master/JS%E4%B8%AD%E7%9A%84%E5%8E%9F%E5%9E%8B%E5%AF%B9%E8%B1%A1.md)
@@ -115,7 +115,7 @@
     }
 
     // 子类
-    function Student(name){
+    function Student(){
         Person.call(this)              // 新增的代码
     }
 
@@ -179,5 +179,52 @@
 |  原型链继承   |   `Student.prototype = new Person()`   |   实例的引用类型共享   |
 |  构造函数继承   |   在子类(Student)里执行 `Person.call(this)`   |   实例的引用类型不共享   |
 
-我们知道了 `原型链继承` 和 `构造函数继承` 这两个互相矛盾的
----未完待续---
+从上表我们可以看出 `原型链继承` 和 `构造函数继承` 这两种继承方式的优缺点刚好是互相矛盾的,那么我们有没有办法鱼和熊掌兼得呢?
+没有的话,我就不会说出来了,^_^,接下来请允许我隆重介绍 **组合继承**
+
+组合继承,就是各取上面2种继承的长处,**普通属性** 使用 `构造函数继承`,**函数** 使用 `原型链继承`,
+这个代码稍微复杂一点,不过相信有了上面的基础后,看起来也是很轻松
+
+    // 父类
+    function Person() {
+      this.hobbies = ['music','reading']
+    }
+
+    // 父类函数
+    Person.prototype.say = function() {console.log('I am a person')}
+
+    // 子类
+    function Student(){
+        Person.call(this)             // 构造函数继承(继承属性)
+    }
+    // 继承
+    Student.prototype = new Person()  // 原型链继承(继承方法)
+
+使用
+
+    // 实例化
+    var stu1 = new Student()
+    var stu2 = new Student()
+
+    stu1.hobbies.push('basketball')
+    console.log(stu1.hobbies)           // music,reading,basketball
+    console.log(stu2.hobbies)           // music,reading
+
+    console.log(stu1.say == stu2.say)   // true
+
+这样,我们就既能实现属性的独立,又能做到函数的共享,是不是很完美呢?
+
+> 组合继承据说是JavaScript中最常用的继承方式(具体无法考证哈).
+
+至此,我们就把js里面的常用继承了解完了,其实也没有那么难嘛!不过,我们总结一下3种继承
+
+1. 原型链继承,会共享引用属性
+2. 构造函数继承,会独享所有属性,包括引用属性(重点是函数)
+3. 组合继承,利用原型链继承要共享的属性,利用构造函数继承要独享的属性,实现相对完美的继承
+
+上面为什么要说相对完美呢? 因为本文的标题叫【JS中的继承(上)】,那肯定是还有【JS中的继承(下)】咯，
+目前为止,我们只讲了3种最基本的继承,事实上,JavaScript还有好多继承方式,为了让你不至于学习疲劳，所以我打算分开来讲，
+如果你没有那个耐性继续看下去，那么看完这篇对于理解JavaScript的继承，也是够用的。但是建议多看两遍，加深印象，
+我学js继承的时候，那本犀牛书都被我翻烂了，写这篇文字的时候，我还在一遍翻一边写的呢(嘘！)
+
+好了，今天就到这里，感谢收看，如果觉得对您有用，请给本文的[github](https://github.com/noahlam/articles)加个star,万分感谢，另外，github上还有其他一些关于前端的教程和组件，有兴趣的童鞋可以看看，你们的支持就是我最大的动力。
