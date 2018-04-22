@@ -8,32 +8,9 @@
 </head>
 <body>
 <script>
-  // 父类
-  function Person() {
-    this.hobbies = ['music','reading']
-  }
-
-  // 父类函数
-  Person.prototype.say = function() {console.log('I am a person')}
-
-  // 子类
-  function Student(){
-    Person.call(this)             // 构造函数继承(继承属性)
-  }
-  // 继承
-  Student.prototype = new Person()  // 原型链继承(继承方法)
-
-  // 使用
-
-  // 实例化
-  var stu1 = new Student()
-  var stu2 = new Student()
-
-  stu1.hobbies.push('basketball')
-  console.log(stu1.hobbies)   // music,reading,basketball
-  console.log(stu2.hobbies)   // music,reading
-
-  console.log(stu1.say == stu2.say)
+  var d = new Date()
+  let s = d[Symbol.toPrimitive]()
+  console.log(+s)
 </script>
 </body>
 </html>
