@@ -40,7 +40,26 @@ clone 内部首先是创建了一个空的构造函数F,然后把F的prototype�
 实例对象的引用类型属性无法共享,尽管这既是缺点也是优点.
 
 三. 寄生组合式继承  
-上一篇我们提到的`组合继承`其实也有个缺点,就是**父类构造函数里面的代码会执行2遍
-`寄生组合式继承`类似`组合继承` 
+上一篇我们提到的`组合继承`其实也有个缺点,就是**父类构造函数里面的代码会执行2遍**,第一遍是在原型继承的时候实例化父类,
+第二遍是在子类的构造函数里面借用父类的构造函数,我们可以用寄生组合式继承来解决这个问题
 
----未完待续---
+    function inherit(sub, super){
+        let prototype = clone(super.prototype)
+        prototype.constructor = sub    
+        sub.prototype = prototype      
+    }
+    
+这样我们就实现了一个寄生组合式继承的函数inherit,接下来我们来使用一下:
+
+    function Person(name){}
+    
+    function Student(){
+        SuperType.call(this)
+    }
+    
+    inherit(Student, Student)
+    
+我们用 `inherit` 函数替换了 `Student.prototype = new Person() `,从而避免了执行 `new Person()`.
+
+关于js的继承就介绍到这里，感谢收看，如果觉得本文对您有用，请给本文的[github](https://github.com/noahlam/articles)加个star,万分感谢，
+另外，github上还有其他一些关于前端的教程和组件，有兴趣的童鞋可以看看，你们的支持就是我最大的动力。
