@@ -5,6 +5,8 @@ event bus 的成本反而比vuex还高, 所以技术选型上选用了 vuex, 但
 团队里的一些新人一听到vuex,就开始退缩了, 因为vuex 很难? 真的很难吗?
 今天我们用简单的3步来证明一下,vuex有多简单.
 
+> #### 纯属个人经验,难免有不正确的地方,如有发现,欢迎指正!
+
 > #### 这是一个针对新手的入门级教程、入门级教程、入门级教程
 
 ### 第零步
@@ -112,7 +114,10 @@ export default {
 
 ### 最后
 
-本来想在最后再扩展一下getter,action+dispatch,模块化等等,不过为了对得起这个标题,只好等下一篇再写咯..
+本来想在最后再扩展一下getter,action+dispatch,模块化等等,不过为了对得起这个标题,
+只好放在 [下一篇:vuex其实超简单,喝完这3步,还有3步](https://github.com/noahlam/articles/blob/master/vuex%E5%85%B6%E5%AE%9E%E8%B6%85%E7%AE%80%E5%8D%95%2C%E5%96%9D%E5%AE%8C%E8%BF%993%E6%AD%A5%2C%E8%BF%98%E6%9C%893%E6%AD%A5.md)
+
+
 
 如果觉得本文对您有用，请给本文的[github](https://github.com/noahlam/articles)加个star,万分感谢
 
