@@ -6,7 +6,7 @@
 
 > 还是一样,本文针对初学者.
 
-一、 **Getter**
+### 一、 **Getter**
 
 我们先回忆一下上一篇的代码
 ```js
@@ -59,7 +59,7 @@ computed:{
 事实上, getter 不止单单起到封装的作用,它还跟vue的computed属性一样,会缓存结果数据,
 只有当依赖改变的时候,才要重新计算.
 
-二、 **actions和$dispatch**
+### 二、 **actions和$dispatch**
 
 细心的你,一定发现我之前代码里 `mutations` 头上的注释了 `类似 vue 里的 mothods(同步方法)`
 
@@ -118,7 +118,7 @@ methods: {
 }
 ```
 
-三、 **Module 模块化**
+### 三、 **Module 模块化**
 
 当项目越来越大的时候,单个 store 文件,肯定不是我们想要的, 所以就有了模块化.
 假设 `src/store` 目录下有这2个文件
@@ -161,7 +161,7 @@ export default new Vuex.Store({
 
 这样我们就可以很轻松的把一个store拆分成多个.
 
-四、 **总结**
+### 四、 **总结**
 
 1. actions 的参数是 `store` 对象,而 getters 和 mutations 的参数是 `state` .
 2. actions 和 mutations 还可以传第二个参数,具体看vuex官方文档
