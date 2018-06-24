@@ -27,12 +27,12 @@
 
 <!--登录页-->
 <div id="login" class="component">
-    <input type="button" onclick="hashPush('index')" value="登陆">
+    <input type="button" onclick="hashPush('index?id=1')" value="登陆">
 </div>
 
 <!--首页-->
 <div id="index" class="component">
-    <input type="button" onclick="hashPush('login')" value="退出登陆">
+    <input type="button" onclick="hashPush('login?key=2')" value="退出登陆">
 </div>
 
 </body>
@@ -45,9 +45,31 @@
 
     // 监听hash的变动
     window.addEventListener('hashchange', function (e) {
-        let url = location.hash.slice(1) || "/"
-        console.log('当前的hash地址', url)
-        setVisible(url)
+        let url = location.hash.slice(1) || "index"
+        // 解析url
+        let questionIndex = url.indexOf("?")
+        let path, query
+        if(questionIndex >= 0){
+            path = url.substr(0,questionIndex)
+            let queryString = url.substr(questionIndex+1)
+            let queryArray = queryString.split("&")
+            let queryObject = {}
+            queryArray.map(str => {
+                let equalIndex = str.indexOf("=")
+                if(equalIndex > 0) {
+                    let key = str.substr(0,equalIndex)
+                    let value = str.substr(equalIndex+1)
+                    queryObject[key] = value
+                }
+            })
+            query = queryObject
+        } else {
+            path = url
+            query = {}
+        }
+
+        console.log('接收到的参数', query)
+        setVisible(path)
     })
 
     function setVisible(url) {
