@@ -1,16 +1,67 @@
 <html>
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport"
-        content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        #login, #index{
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+
+        #login{
+            background: #f5f5f5;
+            display: block;
+        }
+
+        #index{
+            background: #aaddff;
+        }
+    </style>
 </head>
 <body>
-<script>
-  var d = new Date()
-  let s = d[Symbol.toPrimitive]()
-  console.log(+s)
-</script>
+
+<!--登录页-->
+<div id="login" class="component">
+    <input type="button" onclick="hashPush('index')" value="登陆">
+</div>
+
+<!--首页-->
+<div id="index" class="component">
+    <input type="button" onclick="hashPush('login')" value="退出登陆">
+</div>
+
 </body>
+<script>
+
+    // 页面跳转
+    function hashPush(url) {
+        location.hash = "#" + url
+    }
+
+    // 监听hash的变动
+    window.addEventListener('hashchange', function (e) {
+        let url = location.hash.slice(1) || "/"
+        console.log('当前的hash地址', url)
+        setVisible(url)
+    })
+
+    function setVisible(url) {
+        let components = Array.from(document.body.querySelectorAll(".component"))
+        components.map(item => {
+            if(item.id===url) {
+                console.log('显示',item.id)
+                item.style.display = 'block'
+            } else {
+                console.log('隐藏',item.id)
+                item.style.display = 'none'
+            }
+
+        })
+    }
+</script>
 </html>
