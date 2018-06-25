@@ -1,89 +1,104 @@
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
-    <style>
-        body{
-            margin: 0;
-            padding: 0;
-        }
-        #login, #index{
-            width: 100%;
-            height: 100%;
-            display: none;
-        }
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+    }
 
-        #login{
-            background: #f5f5f5;
-            display: block;
-        }
+    #login, #index {
+      width: 100%;
+      height: 100%;
+      display: none;
+    }
 
-        #index{
-            background: #aaddff;
-        }
-    </style>
+    #login {
+      background: #f5f5f5;
+      display: block;
+    }
+
+    #index {
+      background: #aaddff;
+    }
+  </style>
 </head>
 <body>
 
 <!--登录页-->
 <div id="login" class="component">
-    <input type="button" onclick="hashPush('index?id=1')" value="登陆">
+  <input type="button" onclick="hashPush('index?id=1')" value="登陆">
 </div>
 
 <!--首页-->
 <div id="index" class="component">
-    <input type="button" onclick="hashPush('login?key=2')" value="退出登陆">
+  <input type="button" onclick="hashPush('login?key=2',{data:'params data'})" value="退出登陆">
 </div>
 
 </body>
 <script>
 
-    // 页面跳转
-    function hashPush(url) {
-        location.hash = "#" + url
+  var params = {}
+
+  // 页面跳转
+  function hashPush(url, param) {
+    location.hash = "#" + url
+
+    // 解析url
+    let questionIndex = url.indexOf("?")
+    let path = url
+    if (questionIndex >= 0) {
+      path = url.substr(0, questionIndex)
     }
 
-    // 监听hash的变动
-    window.addEventListener('hashchange', function (e) {
-        let url = location.hash.slice(1) || "index"
-        // 解析url
-        let questionIndex = url.indexOf("?")
-        let path, query
-        if(questionIndex >= 0){
-            path = url.substr(0,questionIndex)
-            let queryString = url.substr(questionIndex+1)
-            let queryArray = queryString.split("&")
-            let queryObject = {}
-            queryArray.map(str => {
-                let equalIndex = str.indexOf("=")
-                if(equalIndex > 0) {
-                    let key = str.substr(0,equalIndex)
-                    let value = str.substr(equalIndex+1)
-                    queryObject[key] = value
-                }
-            })
-            query = queryObject
-        } else {
-            path = url
-            query = {}
+    if (param) {
+      params[path] = param
+    }
+  }
+
+  // 监听hash的变动
+  window.addEventListener('hashchange', function (e) {
+    let url = location.hash.slice(1) || "index"
+    // 解析url
+    let questionIndex = url.indexOf("?")
+    let path, query
+    if (questionIndex >= 0) {
+      path = url.substr(0, questionIndex)
+      let queryString = url.substr(questionIndex + 1)
+      let queryArray = queryString.split("&")
+      let queryObject = {}
+      queryArray.map(str => {
+        let equalIndex = str.indexOf("=")
+        if (equalIndex > 0) {
+          let key = str.substr(0, equalIndex)
+          let value = str.substr(equalIndex + 1)
+          queryObject[key] = value
         }
-
-        console.log('接收到的参数', query)
-        setVisible(path)
-    })
-
-    function setVisible(url) {
-        let components = Array.from(document.body.querySelectorAll(".component"))
-        components.map(item => {
-            if(item.id===url) {
-                console.log('显示',item.id)
-                item.style.display = 'block'
-            } else {
-                console.log('隐藏',item.id)
-                item.style.display = 'none'
-            }
-
-        })
+      })
+      query = queryObject
+    } else {
+      path = url
+      query = {}
     }
+
+    console.log('接收到url传递的参数', query)
+    console.log('直接用params传递的参数', params[path])
+    setVisible(path)
+  })
+
+  function setVisible(url) {
+    let components = Array.from(document.body.querySelectorAll(".component"))
+    components.map(item => {
+      if (item.id === url) {
+        // console.log('显示',item.id)
+        item.style.display = 'block'
+      } else {
+        // console.log('隐藏',item.id)
+        item.style.display = 'none'
+      }
+
+    })
+  }
 </script>
 </html>
