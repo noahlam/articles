@@ -6,8 +6,8 @@
 相信用过vue的童鞋，都经常这样做，用Vue.prototype.xxx = xxx 把一个方法或者属性添加到Vue对象的原型上，
 这样，我们在vue实例的任何地方，都可以用这个方法或属性了，我最喜欢用的，就是把异步请求库
 （我比较喜欢用axios）挂载到vue原型上：
-
-    // 一般是./src/mian.js
+```javascript
+   // 一般是./src/mian.js
     // 这里为了方便理解就直接引入axios，实际使用，我们可以先用axios封装一个异步请求模块
     // 在模块里做一些拦截或者处理，然后再导入这个模块。具体做法看
     import axios from 'axios'
@@ -20,6 +20,8 @@
       components: { App },
       template: '<App/>'
     })
+```
+ 
 
 这了是prototype就是我们所说的原型，那什么是原型呢？ 我们看看MDN给的解释
 > 当谈到继承时，JavaScript 只有一种结构：对象。每个对象都有一个私有属性（称之为 \[\[Prototype\]\]），
@@ -37,17 +39,20 @@ prototype最主要的作用就是该原型所属对象的所有实例，都能�
 上面的代码中，通过向Vue.prototype中添加一个post方法，然后就可以在所有vue实例中使用该方法，就是个简单的实践。
 
 我们回头看看 [【JS中创建对象的方法】](https://github.com/noahlam/articles/blob/master/JS%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E7%9A%84%E6%96%B9%E6%B3%95.md)里面的原型模式
-
+```javascript
     function Student(){}   // 声明一个空函数
     Student.prototype.name = 'xiaohong'
     Student.prototype.age = 17
     Student.prototype.gender = 'f'
     Student.prototype.study = fucntion() { console.log('我在学习...')}
+```
+
 
 我们先定义了一个空函数，注意：这个时候，我们并没有认为的给函数添加一个prototype属性/方法，
 而Student却自动有了prototype，然后我们往prototype里面添加了name,age,gender属性和study方法，
 然后我们用new实例化2个Student对象出来
 
+```javascript
     var studentA = new Student()
     console.log(studentA.name)    // xiaohong
     console.log(studentA.age)     // 17
@@ -59,11 +64,13 @@ prototype最主要的作用就是该原型所属对象的所有实例，都能�
     console.log(studentB.name)    // 17
     console.log(studentB.gender)  // f
     studentB.study()              // 我在学习...
+```
 
 上面的例子可以看出，对象的prototype里面的属性和方法，在该对象的所有实例里面，都是共享的
 那如果我们想要让实例对象有自己的属性/方法，该怎么办呢？ 比如，我想让studentB的名字是'lili',
 很简单，直接在实例对象上添加该属性/方法：
 
+```javascript
     studentA.name = 'lili'
     studentA.study = function () {
         console.log('我在偷懒')
@@ -73,6 +80,7 @@ prototype最主要的作用就是该原型所属对象的所有实例，都能�
     console.log(studentB.name)  // xiaohong
     studentA.study()            // 我在偷懒
     studentB.study()            // 我在学习...
+```
 
 可以看出，studentA的属性/方法被改变的时候，studentB没有对应的跟着改变，这是为什么呢？
 不是说好的全所有prototype里的属性/方法都是共享的吗？事实上，prototype里的属性/方法，确实是共享的，
@@ -85,13 +93,18 @@ prototype最主要的作用就是该原型所属对象的所有实例，都能�
 那么新的问题来了，我们该如何判断一个属性，是属于实例本身的，还是属于prototype的？ 答案是hasOwnProperty方法，
 hasOwnProperty方法可以检测到实例对象里面有没有给定的属性，**该方法只能检测到实例里面的属性，检测不到prototype上的**
 
+```javascript
     studentA.hasOwnProperty('name')  // true
     studentB.hasOwnProperty('name')  // false
+```
 
 那如果想同时查找实例对象和原型对象prototype呢？我们可以用 in 操作符
 
+```javascript
     'name' in studentA    // true
     'name' in studentB    // true
+```
+
 有了这2个方法，我们就可以组合起来判断属性是属于实例还是原型了。
 
 > 这里老是说到实例，不得不提一下，**实例对象**虽然是构造函数“构造”出来的，但是其实跟构造函数没有直接联系，
