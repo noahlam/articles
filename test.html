@@ -1,104 +1,39 @@
 <html>
 <head>
-  <meta charset="UTF-8">
-  <title>Document</title>
-  <style>
-    body {
-      margin: 0;
-      padding: 0;
-    }
-
-    #login, #index {
-      width: 100%;
-      height: 100%;
-      display: none;
-    }
-
-    #login {
-      background: #f5f5f5;
-      display: block;
-    }
-
-    #index {
-      background: #aaddff;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <title>Document</title>
 </head>
 <body>
 
-<!--登录页-->
-<div id="login" class="component">
-  <input type="button" onclick="hashPush('index?id=1')" value="登陆">
-</div>
-
-<!--首页-->
-<div id="index" class="component">
-  <input type="button" onclick="hashPush('login?key=2',{data:'params data'})" value="退出登陆">
-</div>
 
 </body>
 <script>
-
-  var params = {}
-
-  // 页面跳转
-  function hashPush(url, param) {
-    location.hash = "#" + url
-
-    // 解析url
-    let questionIndex = url.indexOf("?")
-    let path = url
-    if (questionIndex >= 0) {
-      path = url.substr(0, questionIndex)
+    // http://www.cnblogs.com/eniac12/p/5329396.html
+    function swap(left,right) {
+        let t = arr[left]
+        arr[left] = arr[right]
+        arr[right] = t
     }
-
-    if (param) {
-      params[path] = param
-    }
-  }
-
-  // 监听hash的变动
-  window.addEventListener('hashchange', function (e) {
-    let url = location.hash.slice(1) || "index"
-    // 解析url
-    let questionIndex = url.indexOf("?")
-    let path, query
-    if (questionIndex >= 0) {
-      path = url.substr(0, questionIndex)
-      let queryString = url.substr(questionIndex + 1)
-      let queryArray = queryString.split("&")
-      let queryObject = {}
-      queryArray.map(str => {
-        let equalIndex = str.indexOf("=")
-        if (equalIndex > 0) {
-          let key = str.substr(0, equalIndex)
-          let value = str.substr(equalIndex + 1)
-          queryObject[key] = value
+    function partition(left,right){
+        let base = arr[right]                   // 每次都设最后一个为 基准
+        let idx = left - 1                      // idx 为小于基准的子数组最后一个元素的索引
+        for(let i = left;i<right;i++){          // 遍历基准以外的其他元素
+            if(arr[i]<= base)   swap(++idx,i)   // 把小于等于基准的元素放到前一个子数组末尾
         }
-      })
-      query = queryObject
-    } else {
-      path = url
-      query = {}
+        swap(idx + 1, right)
+        return idx + 1;
+    }
+    function quickSort(left =0, right=arr.length) {
+        if (left < right){
+            let middleIdx =  partition(left, right); // 基准的索引
+            quickSort(left, middleIdx - 1);
+            quickSort(middleIdx + 1, right);
+        }
+        return arr
     }
 
-    console.log('接收到url传递的参数', query)
-    console.log('直接用params传递的参数', params[path])
-    setVisible(path)
-  })
+    let arr = [54, 76, 29, 23, 58, 43, 19, 38, 48, 34, 48, 38, 8, 64]
 
-  function setVisible(url) {
-    let components = Array.from(document.body.querySelectorAll(".component"))
-    components.map(item => {
-      if (item.id === url) {
-        // console.log('显示',item.id)
-        item.style.display = 'block'
-      } else {
-        // console.log('隐藏',item.id)
-        item.style.display = 'none'
-      }
-
-    })
-  }
+    console.log(quickSort(arr))
 </script>
 </html>
