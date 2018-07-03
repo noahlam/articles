@@ -1,42 +1,68 @@
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <title>Document</title>
 </head>
 <body>
 
 
 </body>
 <script>
-    // http://www.cnblogs.com/eniac12/p/5329396.html
-    function swap(left, right) {
-        let t = arr[left]
-        arr[left] = arr[right]
-        arr[right] = t
-    }
+  // http://www.cnblogs.com/eniac12/p/5329396.html
+  //    function swap(left, right) {
+  //        let t = arr[left]
+  //        arr[left] = arr[right]
+  //        arr[right] = t
+  //    }
+  //
+  //    function partition(left, right) {
+  //        let base = arr[right]
+  //        let idx = left - 1
+  //        for (let i = left; i < right; i++) {
+  //            if (arr[i] <= base) {
+  //                swap(++idx, i)
+  //            }
+  //        }
+  //        swap(++idx, right)
+  //        return idx
+  //    }
+  //
+  //    function quickSort(left = 0 , right = arr.length - 1) {
+  //        if (left < right) {
+  //            let idx = partition(left,right)
+  //            quickSort(left,idx -1)
+  //            quickSort(idx+1,right)
+  //        }
+  //    }
 
-    function partition(left, right) {
-        let base = arr[right]
-        let idx = left - 1
-        for (let i = left; i < right; i++) {
-            if (arr[i] <= base) {
-                swap(++idx, i)
-            }
-        }
-        swap(++idx, right)
-        return idx
-    }
+  function swap(arr, left, right) {
+    let t = arr[left]
+    arr[left] = arr[right]
+    arr[right] = t
+  }
 
-    function quickSort(left = 0 , right = arr.length - 1) {
-        if (left < right) {
-            let idx = partition(left,right)
-            quickSort(left,idx -1)
-            quickSort(idx+1,right)
-        }
+  function partition(arr, left, right) {
+    let cur = arr[right]
+    let idx = left - 1
+    for (let i = left; i < right; i++) {
+      if (arr[i] <= cur) {
+        swap(arr, i, ++idx)
+      }
     }
+    swap(arr, ++idx, right)
+    return idx
+  }
 
-    var arr = [54, 76, 29, 23, 58, 43, 19, 38, 48, 34, 48, 38, 8, 64]
-    quickSort()
-    console.log(arr)
+  function quickSort(arr, left = 0, right = arr.length - 1) {
+    if (left < right) {
+      let idx = partition(arr, left, right)
+      quickSort(arr, left, idx - 1)
+      quickSort(arr, idx + 1, right)
+    }
+  }
+
+  var arr = [54, 76, 29, 23, 58, 43, 19, 38, 48, 34, 28, 38, 8, 64]
+  quickSort(arr)
+  console.log(arr)
 </script>
 </html>
