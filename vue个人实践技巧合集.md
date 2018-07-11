@@ -151,4 +151,4 @@
 如果觉得本文对您有用，请给本文的[github](https://github.com/noahlam/articles)加个star,万分感谢
 
 另外，[github](https://github.com/noahlam/articles)上还有其他一些关于前端的教程和组件，
-有兴趣的童鞋可以看看，你们的支持就是我最大的动力。
+有兴趣的童鞋可以看看，你们的支持就是我最大的动力。  
