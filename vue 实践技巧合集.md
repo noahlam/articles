@@ -109,10 +109,12 @@
       firstName: 'Fred',
       lastName: 'Flintstone'
     }
-    let res  = this.post('/user/12345',param)
+    let res  = await this.post('/user/12345',param)
     console.log(res) // res 就是异步返回的数据
     
     ```
+    > tip: `await` 关键字必须在 `被 async 修饰的函数里面使用`
+
 1. **如果你觉得有时候，你真的需要父子组件共享一个值，不如试试传个引用类型过去** 
 
     `vue` 的父子组件传值，有好多种方法，这里就不一一列举了，但是今天我们要了解的，是利用 `javascript` 的引用类型特性，还达到另一种传值的目的  
