@@ -77,22 +77,17 @@
     如果有跨域，或者需要设置 `http` 头等，还需要加入更多的配置，而这些配置，对于同一个项目来说，基本都是一样的，不一样的只有 `url` 跟参数，既然这样，那我吗为什么不把它封装成一个方法呢？
     ```javascript
     function post (url,param) {
-      return new Promise((resolve, reject) => {
-        axios({
+        return axios({
           method: 'post',
           url: url,
           data: param
+          ... axios 的其他配置
         })
-         .then(function (response) {
-            resolve(response);
-          })
-          .catch(function (error) {
-            reject(error);
-          });
-      })
     }
     
     ```
+    > tip: 这里原来我多用了一层promise包起来,对简单的需求来说是太多余了,感觉掘金用户 `@日月为易。` 指出
+
     再结合第一点，我们就可以再任意 `vue` 实例中这样使用
     ```javascript
     let param = {
@@ -332,6 +327,31 @@
     这样，我们就能省掉父组件上的一列席处理代码，`vue` 会自动帮你处理好
 
     > tip: 这种方法只适用于改变单个值的情况，且子组件对父组件只需简单的传值，不需要其他附加操作(如更新列表)的情况。
+
+    **补充一个 `this.$emit('update:fidldName',value)` 方法 (感谢掘金用户 `@日月为易。` 指出)**
+    具体用法如下:
+
+    父组件
+    ```vue
+        <subComponent field1.sync="param1" field2.sync="param2"></subComponent>
+    ```
+    子组件
+    ```javascript
+    <script >
+      export default {
+        methods:{
+          updateData1 (newValue) {
+            this.$emit('update:field1',newValue)
+          },
+          updateData2 (newValue) {
+            this.$emit('update:field2',newValue)
+          }
+        }
+      }
+    </script>
+    ```
+
+    该方法,个人认为比较适用于 要更新的数据不能绑定在 `v-model` 的情况下,或者要双向通信的数据大于 1 个(1个也可以用,但我个人更推荐 `input` 的方式, 看个人喜好吧),但又不会很多的情况下.
 
 1. **`conponents`放在 `Vue options` 的最上面**  
 
