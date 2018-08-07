@@ -1,4 +1,4 @@
-### 前言  
+### 前言
 
 最近收到一个这样的需求,要求做一个基于 vue 和 element-ui 的通用后台框架页,具体要求如下:
 1. 要求通用性高,需要在后期四十多个子项目中使用，所以大部分地方都做成可配置的.
@@ -6,7 +6,7 @@
 3. 要求实现多页签,并且可以通过浏览器 url 回显多页签.而且页签内要维护一个历史记录，可以后退
 4. 组件要求异步加载,减少首屏加载时间.
 
-很明显,这就是一个 `类 ERP` 的应用. 做过 JSP 等后台的同学,对多页签应该都很熟悉吧.  
+很明显,这就是一个 `类 ERP` 的应用. 做过 JSP 等后台的同学,对多页签应该都很熟悉吧.
 
 那接下来我们就来谈谈实现.
 
@@ -69,7 +69,7 @@ function downloadTemplate(dir){
   spinner.start(`您选择的目录是: ${chalk.red(dir)}, 数据加载中,请稍后...`);
 
   // 克隆 模板文件
-  gitClone(`https://github.com/noahlam/main-frame.git`, dir , null, function(err) {
+  gitClone(`https://github.com/noahlam/vue-multi-tab.git`, dir , null, function(err) {
     // 移除无用的文件
     shell.rm('-rf', `${dir}/.git`)
 	  spinner.succeed('项目初始化成功!')
@@ -83,7 +83,7 @@ function downloadTemplate(dir){
 }
 ```
 
-如果你这个脚手架有疑问或者兴趣，可以直接访问 github 上的代码 [no-cli](https://github.com/noahlam/no-cli.git)
+如果你这个脚手架有疑问或者兴趣，可以直接访问 github 上的代码 [tab-cli](https://github.com/noahlam/tab-cli.git)
 
 
 ### 实现多页签
@@ -124,8 +124,8 @@ vue.component('home', (resolve) => {require.ensure([], ()=>resolve(require('@/Vi
 
 ### 结束语
 
-首先，当然上献上该项目的 [github地址](https://github.com/noahlam/main-frame.git) 咯  
+首先，当然上献上该项目的 [github地址](https://github.com/noahlam/vue-multi-tab.git) 咯
 
-其次是本文的的地址 [个人技术帖合集](https://github.com/noahlam/articles)  
+其次是本文的的地址 [个人技术帖合集](https://github.com/noahlam/articles)
 
-以上项目 欢迎随意 `star` 和 `follow`, 和不随意的 `issue`  
+以上项目 欢迎随意 `star` 和 `follow`, 和不随意的 `issue`
