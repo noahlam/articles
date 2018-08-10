@@ -69,7 +69,7 @@ function downloadTemplate(dir){
   spinner.start(`您选择的目录是: ${chalk.red(dir)}, 数据加载中,请稍后...`);
 
   // 克隆 模板文件
-  gitClone(`https://github.com/noahlam/main-frame.git`, dir , null, function(err) {
+  gitClone(`https://github.com/noahlam/vue-multi-tab.git`, dir , null, function(err) {
     // 移除无用的文件
     shell.rm('-rf', `${dir}/.git`)
 	  spinner.succeed('项目初始化成功!')
@@ -124,7 +124,7 @@ vue.component('home', (resolve) => {require.ensure([], ()=>resolve(require('@/Vi
 
 ### 结束语
 
-首先，当然上献上该项目的 [github地址](https://github.com/noahlam/main-frame.git) 咯  
+首先，当然上献上该项目的 [github地址](https://github.com/noahlam/vue-multi-tab.git) 咯  
 
 其次是本文的的地址 [个人技术帖合集](https://github.com/noahlam/articles)  
 
