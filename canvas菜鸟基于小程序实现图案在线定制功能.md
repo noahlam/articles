@@ -63,7 +63,6 @@ ctx.drawImage('/static/design/icons/scale.png', x + this.tempImgWidth - r, y + t
 这就需要监听 canvas 的 bindtouchstart, bindtouchmove, bindtouchend 三个事件,
 然后 ` e.touches[0].x` 和 `e.touches[0].y` 可以获取当前手指的位置,
 在 bindtouchstart 的回调里面判断当前位置,如果跟某个操作按钮重叠,就说明是操做,如果都没有重叠,则是拖动,然后把操作记录下来,
-
 在 bindtouchmove 的回调里面,获取手指移动的距离和角度,然后根据 bindtouchstart 里记录的操作,
 调整对应的参数(拖动跟缩放,只要计算当前点的 x,y 跟 bindtouchstart 点的 x,y 的偏移量即可,旋转的上面有提过,百度有),
 然后重新调用 `ctx.draw()` 重新绘图.
