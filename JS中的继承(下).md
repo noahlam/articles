@@ -64,6 +64,3 @@ inherit(Student, Student)
 我们用 `inherit` 函数替换了 `Student.prototype = new Person() `,从而避免了执行 `new Person()`.
 
 > 书上说: 寄生组合式继承是引用类型最理想的继承范式.
-
-关于js的继承就介绍到这里，感谢收看，如果觉得本文对您有用，请给本文的[github](https://github.com/noahlam/articles)加个star,万分感谢，
-另外，github上还有其他一些关于前端的教程和组件，有兴趣的童鞋可以看看，你们的支持就是我最大的动力。

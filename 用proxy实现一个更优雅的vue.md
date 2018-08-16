@@ -103,7 +103,3 @@
 ### 最后
 
 本文最终实现代码已经放在 [github](https://github.com/noahlam/practice-truth/blob/master/code/vue-class-proxy.html)上，想要直接看效果的同学，可以上去直接copy，运行。
-
-如果觉得本文对您有用，请给本文的[github](https://github.com/noahlam/articles)加个star,万分感谢
-
-另外，[github](https://github.com/noahlam/articles)上还有其他一些关于前端的教程和组件，有兴趣的童鞋可以看看，你们的支持就是我最大的动力。

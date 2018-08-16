@@ -168,7 +168,3 @@ export default new Vuex.Store({
 3. getters/mutations/actions 都有对应的map,如: mapGetters , 具体看vuex官方文档
 1. 模块内部如果怕有命名冲突的话,可以使用命名空间, 具体看vuex官方文档
 4. vuex 其实跟 vue 非常像,有data(state),methods(mutations,actions),computed(getters),还能模块化.
-
-如果觉得本文对您有用，请给本文的[github](https://github.com/noahlam/articles)加个star,万分感谢
-
-另外，[github](https://github.com/noahlam/articles)上还有其他一些关于前端的教程和组件，有兴趣的童鞋可以看看，你们的支持就是我最大的动力。
