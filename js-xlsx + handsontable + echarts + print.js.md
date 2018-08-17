@@ -21,9 +21,13 @@ js-xlsx + handsontable + echarts + print.js 实现在前端导入excel数据并�
 这里顺便提一下, FileReader 对象提供以下方法,用来读取各种格式的数据(参考自MDN)
 
 FileReader.readAsArrayBuffer()  // 读取文件的 ArrayBuffer 数据对象.
+
 FileReader.readAsBinaryString() // 读取文件的原始二进制数据
-FileReader.readAsDataURL()      // 返回一个URL格式的字符串以表示所读取文件的内容。
+
+FileReader.readAsDataURL()      // 返回一个URL格式的字符串以表示所读取文件的内容
+
 FileReader.readAsText()         // 返回一个字符串以表示所读取的文件内容
+
 
 > tips: 需要注意的是 readXxxxx() 函数,是不直接返回读取结果的,因为读取这个动作异步的.
 
