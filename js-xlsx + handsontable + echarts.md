@@ -1,7 +1,7 @@
-js-xlsx + handsontable + echarts + print.js 实现在前端导入excel数据并生成echart报表
+js-xlsx + handsontable + echarts 实现在前端导入excel数据并生成echart报表
 ### 前言
 最近都在做类似 ERP 的项目,所以呢,又碰到一个比较变态的需求(至少对我来说是),在前端导入 excel 文件,
-然后在浏览器里面预览和编辑,接下来选择一些数据,用echarts生成报表.最后再把报表打印出来.
+然后在浏览器里面预览和编辑,　最后再选择一些数据,用echarts生成报表.
 
 ### 依赖
 
@@ -10,8 +10,6 @@ js-xlsx + handsontable + echarts + print.js 实现在前端导入excel数据并�
 [handsontable](https://github.com/handsontable/handsontable) 类似Excel一样显示和编辑列表数据
 
 [echarts](https://github.com/apache/incubator-echarts) 一个生成各种报表的库
-
-[Print.js](https://github.com/crabbly/Print.js) 在浏览器里打印数据
 
 
 ### 数据导入
@@ -76,8 +74,36 @@ export default {
 </script>
 ```
 
-模板里面的 settings 是 handsontable 的一些配置, 每个项目的需求不同,配置也不同,这里就不列举出来了, 上面获取到的 table 在这里要赋值给 settings.data
+模板里面的 settings 是 handsontable 的一些配置, 每个项目的需求不同,配置也不同,这里就不列举出来了, 上面获取到的 table 在这里要赋值给 settings.data  
+
+我这里用 handsontable 显示数据的目的，是让用户可以清晰的看到上传的表的数据和结构，可以删除屌部分无用的数据，减少冗余。
 
 ### 生成报表
 
-生成完
+数据都处理完了之后，就是生成报表了， 报表这里稍微做的灵活了一点，是要让用户根据上传的数据，自己选择字段，然后用 echart 去生成对应的报表。
+
+为了<del>偷懒</del>降低复杂度，我这里只提供了3种报表类型供选择,分别是 饼图，柱状图，折线图，稍微分析 echart 的配置手册，我发现各种类型的图表，
+其实主要的区别在 series 配置项下面，其他位置几乎没啥区别  <del>就算有区别，也被我无视</del> 。最终的实现大概是这样
+```javascript
+let option = {
+  title: {...},
+  tooltip: {...},
+  xAxis: {...},
+  yAxis: {...},
+  toolbox: {...},
+}
+
+switch (type) {
+  case 'pie' : 
+    option.series = {...}
+    break
+  case 'pie' : 
+    option.series = {...}
+    break
+  case 'pie' : 
+    option.series = {...}
+    break
+}
+
+myChart.setOption(option)
+```
