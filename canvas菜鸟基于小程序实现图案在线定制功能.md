@@ -4,7 +4,7 @@
 
 > 内容比较初级, 因为我也只是一个 canvas 新手,本文仅是一次实践的记录.
 
-![效果图](./pictures/wx-canvas-1.git)
+![效果图](./pictures/wx-canvas-1.gif)
 
 ### 实现-绘图
 其实刚开始接手这个项目的时候,我是打算用小程序的 web-view 组件来嵌套 h5 的,
