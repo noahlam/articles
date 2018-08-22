@@ -52,6 +52,9 @@ let table = XLSX.utils.sheet_to_json(sheetName, {header: 'A', raw: true, defval:
 
 如果单纯的显示无法满足你的需求,那么你可能需要 handsontable 了.
 
+> tips: sheet_to_json 的 第二个参数里面的 header，可以传数字，也可以转 'A', 两个的主要区别在于转化出来的表第一行如果是空行会不会正常显示，
+传 'A' 会正常显示，传数字的话，如果表格的第一行有空白单元格，表格会错乱。
+
 ### 数据展示
 
 首先当然是安装,我的项目是基于 vue 的,所以要安装 vue 版本的,其他框架的,只要安装响应的版本即可.
@@ -107,3 +110,12 @@ switch (type) {
 
 myChart.setOption(option)
 ```
+> echart 第一次渲染完以后，如果改变 option 的数据然后重新渲染，新的 option 数据是采用追加的方式加进去的，类似 javascript 的 Object.assign(),
+所以如果新的数据没办法完全覆盖掉就的数据的话，旧的那些没有被覆盖掉的数据，还会渲染出来. 我对这种情况的处理方法是调用 `dispose.dispose()` 把实例销毁掉，
+然后重新创建一个新实例，设置新的 option
+
+### 最后
+
+本文用的代码都比较基础,就不上传了，有需要的童鞋可以私下发邮件找我要。
+
+本文的的地址 [个人技术帖合集](https://github.com/noahlam/articles) 欢迎随意 `star` 和 `follow`, 和不随意的 `issue`
