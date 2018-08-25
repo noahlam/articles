@@ -111,7 +111,7 @@ switch (type) {
 myChart.setOption(option)
 ```
 > echart 第一次渲染完以后，如果改变 option 的数据然后重新渲染，新的 option 数据是采用追加的方式加进去的，类似 javascript 的 Object.assign(),
-所以如果新的数据没办法完全覆盖掉就的数据的话，旧的那些没有被覆盖掉的数据，还会渲染出来. 我对这种情况的处理方法是调用 `dispose.dispose()` 把实例销毁掉，
+所以如果新的数据没办法完全覆盖掉就旧的数据的话，旧的那些没有被覆盖掉的数据，还会渲染出来. 我对这种情况的处理方法是调用 `dispose.dispose()` 把实例销毁掉，
 然后重新创建一个新实例，设置新的 option
 
 ### 最后
