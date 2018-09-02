@@ -113,6 +113,3 @@ ctx.draw(false, function () {
 本文用的代码都是基于 mpvue 框架的, 这个也是个比较基础的东西,就不整个项目开源浪费 github 的空间了,
 我把跟 canvas 有关代码上传到[这里](https://github.com/noahlam/practice-truth/blob/master/code/OnlineDesign.vue),
 仅供参考,单独运行是肯定运行不起来, 如果有需要源码,可以私下发邮件找我要.
-
-本文的的地址 [个人技术帖合集](https://github.com/noahlam/articles) 欢迎随意 `star` 和 `follow`, 和不随意的 `issue`
-

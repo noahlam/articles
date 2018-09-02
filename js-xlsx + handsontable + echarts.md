@@ -117,5 +117,3 @@ myChart.setOption(option)
 ### 最后
 
 本文用的代码都比较基础,就不上传了，有需要的童鞋可以私下发邮件找我要。
-
-本文的的地址 [个人技术帖合集](https://github.com/noahlam/articles) 欢迎随意 `star` 和 `follow`, 和不随意的 `issue`
