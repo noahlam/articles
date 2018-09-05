@@ -1,124 +1,22 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>引导动画的几种实现方式</title>
-  <style>
-    body {
-      margin:0;
-      padding: 0;
-    }
-    .main {
-      display: flex;
-    }
-    .left{
-      background: #ddd;
-      width: 40%;
-      height: 100%;
-    }
-    .middle {
-      width: 20%;
-      height: 100%;
-    }
-    .mid-top {
-      width: 100%;
-      height: 30%;
-      background: aquamarine;
-    }
-    .mid-center{
-      width: 100%;
-      height: 40%;
-      background: #f00;
-    }
-    .mid-bottom {
-      width: 100%;
-      height: 30%;
-      background: beige;
-    }
-    .right {
-      background: #eee;
-      width: 40%;
-      height: 100%;
-    }
-    .btn {
-      width: 100px;
-      height: 40px;
-      border-radius: 3px;
-      background: #409bcc;
-      margin: 10px;
-      padding:  0 10px;
-      line-height: 40px;
-      cursor: pointer;
-      color: #fff;
-      font-size: 12px;
-    }
-    .blur {
-      opacity: 0.25;
-    }
-    .modal {
-      position: fixed;
-      top:0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      z-index:99;
-      display: none;
-    }
-  </style>
+  <title>Test</title>
 </head>
+
 <body>
-<div class="main">
-  <div class="left">左侧</div>
-  <div class="middle">
-    <div class="mid-top">上</div>
-    <div class="mid-center" onclick="hideGuidance2()">中</div>
-    <div class="mid-bottom">下</div>
-  </div>
-  <div class="right">右侧
-    <div class="btn" onclick="showGuidance1()">显示 第一种</div>
-    <div class="btn" onclick="showGuidance2()">显示 第二种</div>
-  </div>
-</div>
-<div class="modal"></div>
+
 </body>
+
 <script>
-  let clone = null
 
-  function showGuidance1() {
+    debugger
 
-    let modal = document.querySelector('.modal')
-    let target = document.querySelector('.mid-center')
-    clone = target.cloneNode(true)
-    let pos = target.getBoundingClientRect()
-    console.log(pos)
-    clone.style.position = 'fixed'
-    clone.style.left = pos.left
-    clone.style.top = pos.top
-    clone.style.width = pos.width
-    clone.style.height = pos.height
-    clone.style.zIndex = 100
-    clone.onclick = hideGuidance1
+    let str = 'I am a string 是';
 
-    modal.style.display = 'block'
-    document.body.appendChild(clone)
-  }
+    let a = btoa(str);  // a = 'SSBhbSBhIHN0cmluZw=='
 
-  function hideGuidance1() {
-    let modal = document.querySelector('.modal')
-    modal.style.display = 'none'
-    document.body.removeChild(clone)
-  }
-
-  function showGuidance2() {
-    let target = document.querySelector('.mid-center')
-    target.style.boxShadow = '0 0 0 2000px rgba(0, 0, 0, 0.85)'
-    target.style.position = 'relative'
-  }
-
-  function hideGuidance2() {
-    let target = document.querySelector('.mid-center')
-    target.style.boxShadow = null
-    target.style.position = 'static'
-  }
+    let b = atob(a);  // b = 'I am a string'
 </script>
 </html>
+
