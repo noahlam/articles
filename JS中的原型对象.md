@@ -21,7 +21,7 @@
       template: '<App/>'
     })
 ```
- 
+
 
 这了是prototype就是我们所说的原型，那什么是原型呢？ 我们看看MDN给的解释
 > 当谈到继承时，JavaScript 只有一种结构：对象。每个对象都有一个私有属性（称之为 \[\[Prototype\]\]），
@@ -48,7 +48,7 @@ prototype最主要的作用就是该原型所属对象的所有实例，都能�
 ```
 
 
-我们先定义了一个空函数，注意：这个时候，我们并没有认为的给函数添加一个prototype属性/方法，
+我们先定义了一个空函数，注意：这个时候，我们并没有人为的给函数添加一个prototype属性/方法，
 而Student却自动有了prototype，然后我们往prototype里面添加了name,age,gender属性和study方法，
 然后我们用new实例化2个Student对象出来
 
