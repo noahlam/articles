@@ -126,9 +126,3 @@ console.log(data)
 1. [阮一峰：ECMAScript 6 入门 - Promise 对象](http://es6.ruanyifeng.com/#docs/promise)
 1. [深入 Promise(一)——Promise 实现详解](https://zhuanlan.zhihu.com/p/25178630)
 1. [浅谈Promise之按照Promise/A+规范实现Promise类](https://juejin.im/post/5a5c0c04518825734978e1a6)
-
-
-如果觉得本文对您有用，请给本文的[github](https://github.com/noahlam/articles)加个star,万分感谢
-
-另外，[github](https://github.com/noahlam/articles)上还有其他一些关于前端的教程和组件，
-有兴趣的童鞋可以看看，你们的支持就是我最大的动力。

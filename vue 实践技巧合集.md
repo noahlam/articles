@@ -430,6 +430,3 @@
 ### 最后
 
 [本文的github地址](https://github.com/noahlam/articles) 欢迎随意[star](https://github.com/noahlam/articles),[follow](https://github.com/noahlam), 和 不随意的 [issue](https://github.com/noahlam/articles/issues)
-
-另外，[github](https://github.com/noahlam/articles)上还有其他一些关于前端的教程和组件，
-有兴趣的童鞋可以看看，你们的支持就是我最大的动力。 
