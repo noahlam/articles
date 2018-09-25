@@ -52,7 +52,8 @@
       font-size: 12px;
     }
     .blur {
-      opacity: 0.25;
+      /*border:1px solid #f00;*/
+      background: #409bcc;
     }
     .modal {
       position: fixed;
@@ -65,21 +66,27 @@
       display: none;
     }
   </style>
+  <script src="./dependent/html2canvas.min.js"></script>
 </head>
 <body>
 <div class="main">
   <div class="left">左侧</div>
   <div class="middle">
     <div class="mid-top">上</div>
-    <div class="mid-center" onclick="hideGuidance2()">中</div>
+    <div class="mid-center" onclick="hideGuidance2()">
+      这里假设所有的弹出层都是基于页面上原有的元素.
+    </div>
     <div class="mid-bottom">下</div>
   </div>
   <div class="right">右侧
     <div class="btn" onclick="showGuidance1()">显示 第一种</div>
     <div class="btn" onclick="showGuidance2()">显示 第二种</div>
+    <div class="btn" onclick="showGuidance3()">显示 第三种</div>
+    <div class="btn" onclick="showGuidance4()">显示 第四种</div>
   </div>
 </div>
 <div class="modal"></div>
+<canvas id="canvas" class="modal" onclick="hideGuidance3()"></canvas>
 </body>
 <script>
   let clone = null
@@ -90,7 +97,7 @@
     let target = document.querySelector('.mid-center')
     clone = target.cloneNode(true)
     let pos = target.getBoundingClientRect()
-    console.log(pos)
+    // console.log(pos)
     clone.style.position = 'fixed'
     clone.style.left = pos.left
     clone.style.top = pos.top
@@ -119,6 +126,58 @@
     let target = document.querySelector('.mid-center')
     target.style.boxShadow = null
     target.style.position = 'static'
+  }
+
+  function showGuidance3() {
+	  let target = document.querySelector('.mid-center')
+	  let pos = target.getBoundingClientRect()
+	  let w = ~~pos.width
+	  let h = ~~pos.height
+
+	  let canvas = document.querySelector('#canvas')
+    canvas.width = document.documentElement.clientWidth
+    canvas.height = document.documentElement.clientHeight
+	  let ctx = canvas.getContext("2d");
+	  canvas.style.display = 'block'
+
+	  html2canvas(target, {
+      width: w,
+		  height: h,
+	  }).then( (cvs) => {
+		  ctx.drawImage(cvs, pos.left, pos.top)
+    })
+  }
+
+  function hideGuidance3() {
+	  let target = document.querySelector('#canvas')
+	  target.style.display = 'none'
+  }
+
+  function showGuidance4() {
+	  setOpticity(document.querySelector('.main'))
+    // console.log('控制台打印:', doms)
+  }
+
+  function setOpticity (element) {
+	  let doms = Array.from(element.children)
+    if (doms.length) {
+    	let hasChildMatch = false
+	    for (let el of doms) {
+	    	let childs = el.children
+		    if (childs.length) {
+			    hasChildMatch = setOpticity(el)
+		    } else if (!el.className.match(/mid-center/i)) {
+			    el.className += ' blur'
+		    }
+	    }
+    } else if (!element.className.match(/mid-center/i)) {
+		    element.className += ' blur'
+        console.log('控制台打印:加样式')
+    }
+  }
+
+  function hideGuidance4() {
+	  let target = document.querySelector('.mid-center')
   }
 </script>
 </html>
