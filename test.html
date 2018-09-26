@@ -1,183 +1,150 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>引导动画的几种实现方式</title>
+  <title>html2canvas</title>
   <style>
-    body {
-      margin:0;
-      padding: 0;
+    .content {
+      width: 200px;
+      height: 200px;
+      box-sizing: border-box;
+      border: 1px solid #f00;
+      background: #86dfa6;
     }
-    .main {
-      display: flex;
+
+    .blue {
+      color: #07f;
+      display: block;
     }
-    .left{
-      background: #ddd;
-      width: 40%;
-      height: 100%;
+
+    .red {
+      color: #f35;
+      font-size: 20px;
+      display: block;
     }
-    .middle {
-      width: 20%;
-      height: 100%;
-    }
-    .mid-top {
-      width: 100%;
-      height: 30%;
-      background: aquamarine;
-    }
-    .mid-center{
-      width: 100%;
-      height: 40%;
-      background: #f00;
-    }
-    .mid-bottom {
-      width: 100%;
-      height: 30%;
-      background: beige;
-    }
-    .right {
-      background: #eee;
-      width: 40%;
-      height: 100%;
-    }
-    .btn {
+
+    .block {
       width: 100px;
-      height: 40px;
-      border-radius: 3px;
-      background: #409bcc;
-      margin: 10px;
-      padding:  0 10px;
-      line-height: 40px;
-      cursor: pointer;
-      color: #fff;
-      font-size: 12px;
+      height: 100px;
+      background: red;
     }
-    .blur {
-      /*border:1px solid #f00;*/
-      background: #409bcc;
-    }
-    .modal {
-      position: fixed;
-      top:0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      background: rgba(0, 0, 0, 0.85);
-      z-index:99;
+
+    #canvas {
       display: none;
     }
-  </style>
-  <script src="./dependent/html2canvas.min.js"></script>
-</head>
-<body>
-<div class="main">
-  <div class="left">左侧</div>
-  <div class="middle">
-    <div class="mid-top">上</div>
-    <div class="mid-center" onclick="hideGuidance2()">
-      这里假设所有的弹出层都是基于页面上原有的元素.
-    </div>
-    <div class="mid-bottom">下</div>
-  </div>
-  <div class="right">右侧
-    <div class="btn" onclick="showGuidance1()">显示 第一种</div>
-    <div class="btn" onclick="showGuidance2()">显示 第二种</div>
-    <div class="btn" onclick="showGuidance3()">显示 第三种</div>
-    <div class="btn" onclick="showGuidance4()">显示 第四种</div>
-  </div>
-</div>
-<div class="modal"></div>
-<canvas id="canvas" class="modal" onclick="hideGuidance3()"></canvas>
-</body>
-<script>
-  let clone = null
 
-  function showGuidance1() {
-
-    let modal = document.querySelector('.modal')
-    let target = document.querySelector('.mid-center')
-    clone = target.cloneNode(true)
-    let pos = target.getBoundingClientRect()
-    // console.log(pos)
-    clone.style.position = 'fixed'
-    clone.style.left = pos.left
-    clone.style.top = pos.top
-    clone.style.width = pos.width
-    clone.style.height = pos.height
-    clone.style.zIndex = 100
-    clone.onclick = hideGuidance1
-
-    modal.style.display = 'block'
-    document.body.appendChild(clone)
-  }
-
-  function hideGuidance1() {
-    let modal = document.querySelector('.modal')
-    modal.style.display = 'none'
-    document.body.removeChild(clone)
-  }
-
-  function showGuidance2() {
-    let target = document.querySelector('.mid-center')
-    target.style.boxShadow = '0 0 0 2000px rgba(0, 0, 0, 0.85)'
-    target.style.position = 'relative'
-  }
-
-  function hideGuidance2() {
-    let target = document.querySelector('.mid-center')
-    target.style.boxShadow = null
-    target.style.position = 'static'
-  }
-
-  function showGuidance3() {
-	  let target = document.querySelector('.mid-center')
-	  let pos = target.getBoundingClientRect()
-	  let w = ~~pos.width
-	  let h = ~~pos.height
-
-	  let canvas = document.querySelector('#canvas')
-    canvas.width = document.documentElement.clientWidth
-    canvas.height = document.documentElement.clientHeight
-	  let ctx = canvas.getContext("2d");
-	  canvas.style.display = 'block'
-
-	  html2canvas(target, {
-      width: w,
-		  height: h,
-	  }).then( (cvs) => {
-		  ctx.drawImage(cvs, pos.left, pos.top)
-    })
-  }
-
-  function hideGuidance3() {
-	  let target = document.querySelector('#canvas')
-	  target.style.display = 'none'
-  }
-
-  function showGuidance4() {
-	  setOpticity(document.querySelector('.main'))
-    // console.log('控制台打印:', doms)
-  }
-
-  function setOpticity (element) {
-	  let doms = Array.from(element.children)
-    if (doms.length) {
-    	let hasChildMatch = false
-	    for (let el of doms) {
-	    	let childs = el.children
-		    if (childs.length) {
-			    hasChildMatch = setOpticity(el)
-		    } else if (!el.className.match(/mid-center/i)) {
-			    el.className += ' blur'
-		    }
-	    }
-    } else if (!element.className.match(/mid-center/i)) {
-		    element.className += ' blur'
-        console.log('控制台打印:加样式')
+    .button {
+      width: 200px;
+      height: 30px;
+      line-height: 30px;
+      text-align: center;
+      background: #0077ff;
+      color: #fff;
+      border-radius: 3px;
+      margin: 10px 0;
     }
-  }
+  </style>
+</head>
 
-  function hideGuidance4() {
-	  let target = document.querySelector('.mid-center')
-  }
+<body>
+
+<div class="content">
+  <span class="red">这是一个红色的字</span>
+  <div class="block"></div>
+  <span class="blue">这是一个蓝色的字</span>
+</div>
+
+<div class="button" onclick="shot()">点我截图</div>
+
+<canvas id="canvas" width="200" height="200"></canvas>
+
+</body>
+
+<script>
+// 主入口
+function shot () {
+	var canvas = document.getElementById('canvas');
+	var ctx = canvas.getContext('2d');
+
+	let target = document.querySelector('.content')
+	var data = getSvgString(target)
+
+	var DOMURL = window.URL || window.webkitURL || window;
+
+	var img = new Image();
+	var svg = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
+	var url = DOMURL.createObjectURL(svg);
+
+	img.onload = function () {
+		ctx.drawImage(img, 0, 0);
+		DOMURL.revokeObjectURL(url);
+	}
+
+	img.src = url;
+	document.body.appendChild(img)
+}
+// 计算 svg 的字符串
+function getSvgString (element) {
+	return `
+    <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">\n
+       <foreignObject width="100%" height="100%">\n
+          ${rednerDom(element, 1)}
+       </foreignObject>\n
+   </svg>`
+}
+
+// 递归遍历所有子节点
+function rednerDom (element, isWrap) {
+	let tag = element.tagName.toLowerCase()
+	let str = `\n<${tag} `
+	isWrap && (str += `xmlns="http://www.w3.org/1999/xhtml" `)
+	str += ` style="${getElementStyles(element)}">\n`
+
+	if (element.children.length) {
+		for (let el of element.children) {
+			str += rednerDom(el)
+		}
+	} else {
+		str += element.innerHTML
+	}
+	str += `\n</${tag}>\n`
+	return str
+}
+
+// 计算每个 dom 的样式
+// 这里本来应该直接用 Object.keys + forEach 遍历取出的
+// 但是不知道为什么,遍历取出的,会渲染不出来,应该是某些属性有问题
+// 暂时没空去排查那些有问题,所以目前先把常用的直接写死.
+function getElementStyles (el) {
+	let css = window.getComputedStyle(el)
+	let style = ''
+	// 尺寸相关
+	style += `width:${css.width};`
+	style += `height: ${css.height};`
+	style += `line-height: ${css.lineHeight};`
+	style += `max-height: ${css.maxHeight};`
+	style += `min-height: ${css.minHeight};`
+	style += `max-width: ${css.maxWidth};`
+	style += `min-width: ${css.minWidth};`
+
+	style += `font-size: ${css.fontSize};`
+	// 颜色相关
+	style += `color: ${css.color};`
+	style += `background: ${css.background};`
+	// 边框相关
+	style += `border: ${css.border};`
+	style += `box-sizing: ${css.boxSizing};`
+	// 位置相关
+	style += `margin: ${css.margin};`
+	style += `padding: ${css.padding};`
+	style += `position: ${css.position};`
+	style += `left: ${css.left};`
+	style += `right: ${css.right};`
+	style += `top: ${css.top};`
+	style += `bottom: ${css.bottom};`
+	// 布局相关
+	style += `display: ${css.display};`
+	style += `flex: ${css.flex};`
+	return style
+}
 </script>
 </html>
