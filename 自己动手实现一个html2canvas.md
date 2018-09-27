@@ -4,6 +4,10 @@
 
 大概就是 利用 `svg` 的 `foreignObject` 标签, 嵌入 dom, 最后再利用 canvas 绘制 svg. 从而实现最终目的.
 
+先让大家看看效果
+
+![效果图](./pictures/html2canvas.gif)
+
 **MDN示例**
 
 ```JavaScript
