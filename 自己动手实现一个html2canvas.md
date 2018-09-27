@@ -120,7 +120,7 @@ function getElementStyles (el) {
 
 ### 第三步, 渲染 svg
 
-把拼接好的 svg 字符串用 `Blob 对象` 渲染出来(这里暂且称为渲染吧), 然后用 `DOMURL.createObjectURL()` 转换为 url,
+把拼接好的 svg 字符串用 `Blob 对象` new 出来(Blob真的是个很强大的对象啊), 然后用 `DOMURL.createObjectURL()` 转换为 url,
 有了url, 接下来就看大家自由发挥了. 可以直接下载,也可以在 canvas 里绘制. 或者当作图片直接插入到文档...
 
 ```JavaScript
@@ -175,4 +175,6 @@ img.onload = function () {
 
 [MDN: foreignObject](https://developer.mozilla.org/zh-CN/docs/Web/SVG/Element/foreignObject)
 
+完整的代码在[这里](https://github.com/noahlam/practice-truth/tree/master/html2canvas),可以直接运行看效果.
 
+本文地址在->[个人技术帖合集](https://github.com/noahlam/articles), 欢迎给个 start 或 follow
