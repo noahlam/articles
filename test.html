@@ -49,24 +49,22 @@
 
 <div class="content">
   <span class="red">这是一个红色的字</span>
-  <div class="block"></div>
+  <div class="block">123</div>
   <span class="blue">这是一个蓝色的字</span>
 </div>
 
-<div class="button" onclick="shot()">点我截图</div>
+<div class="button" onclick="shotScreen()">点我截图</div>
 
-<canvas id="canvas" width="200" height="200"></canvas>
+<!--<canvas id="canvas" width="200" height="200"></canvas>-->
 
 </body>
 
 <script>
-// 主入口
-function shot () {
-	var canvas = document.getElementById('canvas');
-	var ctx = canvas.getContext('2d');
+// 主入口函数
+function shotScreen () {
 
 	let target = document.querySelector('.content')
-	var data = getSvgString(target)
+	var data = getSvgDomString(target)
 
 	var DOMURL = window.URL || window.webkitURL || window;
 
@@ -74,46 +72,59 @@ function shot () {
 	var svg = new Blob([data], {type: 'image/svg+xml;charset=utf-8'});
 	var url = DOMURL.createObjectURL(svg);
 
-	img.onload = function () {
-		ctx.drawImage(img, 0, 0);
-		DOMURL.revokeObjectURL(url);
-	}
-
 	img.src = url;
 	document.body.appendChild(img)
+
+  // //  如果想画到 canvas 里面
+	// var canvas = document.getElementById('canvas');
+	// var ctx = canvas.getContext('2d');
+  //
+	// img.onload = function () {
+	//    ctx.drawImage(img, 0, 0);
+	//    DOMURL.revokeObjectURL(url);
+	// }
+
+
 }
 // 计算 svg 的字符串
-function getSvgString (element) {
+function getSvgDomString (element) {
 	return `
     <svg xmlns="http://www.w3.org/2000/svg" width="200" height="200">\n
        <foreignObject width="100%" height="100%">\n
-          ${rednerDom(element, 1)}
+          ${renderDom(element, 1)}
        </foreignObject>\n
    </svg>`
 }
 
-// 递归遍历所有子节点
-function rednerDom (element, isWrap) {
+/**
+ * 递归遍历所有子节点
+ * @param element Document Element 要计算的元素
+ * @param isTop Boolean 是否是最外层元素
+**/
+function renderDom (element, isTop) {
 	let tag = element.tagName.toLowerCase()
-	let str = `\n<${tag} `
-	isWrap && (str += `xmlns="http://www.w3.org/1999/xhtml" `)
+	let str = `<${tag} `
+  // 最外层的节点,需要加 xmlns 命名空间
+	isTop && (str += `xmlns="http://www.w3.org/1999/xhtml" `)
 	str += ` style="${getElementStyles(element)}">\n`
 
 	if (element.children.length) {
 		for (let el of element.children) {
-			str += rednerDom(el)
+			str += renderDom(el)
 		}
 	} else {
 		str += element.innerHTML
 	}
-	str += `\n</${tag}>\n`
+	str += `</${tag}>\n`
 	return str
 }
 
-// 计算每个 dom 的样式
-// 这里本来应该直接用 Object.keys + forEach 遍历取出的
-// 但是不知道为什么,遍历取出的,会渲染不出来,应该是某些属性有问题
-// 暂时没空去排查那些有问题,所以目前先把常用的直接写死.
+/**
+ * 计算每个 dom 的样式
+ * 这里本来应该直接用 Object.keys + forEach 遍历取出的
+ * 但是不知道为什么,遍历取出的,会渲染不出来,应该是某些属性有问题
+ * 暂时没空去排查那些有问题,所以目前先把常用的直接写死.
+**/
 function getElementStyles (el) {
 	let css = window.getComputedStyle(el)
 	let style = ''
