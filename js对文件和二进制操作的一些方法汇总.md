@@ -9,6 +9,6 @@
 
 ### FileReader 
 
-首先我们来看一下 fileReader 这个万能的对象, 
+首先我们来看一下 fileReader 这个万能的对象
 
-//https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
+// https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader 
