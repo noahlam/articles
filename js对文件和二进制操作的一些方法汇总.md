@@ -1,5 +1,4 @@
-最近新入职了一家公司，接手了一个项目，接触到一些对文件操作的业务。所以在这边整理一下日常用到的处理方式，当学习笔记吧
-
+最近接手了一个项目，接触到一些对文件操作的业务。所以在这边整理一下日常用到的处理方式，当学习笔记吧
 
 
 1. FileReader
@@ -7,8 +6,19 @@
 3. jspack
 
 
-### FileReader 
+### FileReader
 
-首先我们来看一下 fileReader 这个万能的对象
+首先我们来看一下 `FileReader` 这个万能的对象, 就如同它的名字一样，就是个文件读取器，
+为什么说它是个万能的对象呢，因为什么都可以读取，最近我尝试过用 FileReader 读取过 psd, ppt, 各种图片等等。
+虽然很多情况下，它读出来的是我们完全看不懂的东西。不过通过一定手段的转换，理论上我们可以在浏览器里面打开任何文件类型。
 
-// https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader 
+下面抄一段 MDN 的文档
+
+
+由于是抄的，就不做详细讲解，重点是要知道你要读的文件的编码类型，然后调用对应的方法取读就可以了。
+// https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
+
+
+### Blob 对象
+
+
