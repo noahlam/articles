@@ -16,7 +16,7 @@
 
 
 由于是抄的，就不做详细讲解，重点是要知道你要读的文件的编码类型，然后调用对应的方法取读就可以了。
-// https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
+// https://developer.mozilla.org/zh-CN/docs/Web/API/FileReader
 
 
 ### Blob 对象
