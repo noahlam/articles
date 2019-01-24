@@ -3,20 +3,36 @@
   <meta charset="UTF-8">
   <title>Test</title>
 </head>
+<style>
+  .a{
+    font-size: 300px;
+    color: red;
+    height: 315px;
+    line-height: 315px;
+    border:1px solid #000;
+    overflow: hidden;
+    vertical-align: text-top;
+    font-family: "Microsoft YaHei";
+  }
+  .s1{
+    background: #ffa;
+    font-size: 300px;
+  }
 
+  .s2{
+    background: #faa;
+    font-size: 100px;
+  }
+</style>
 <body>
-
+<!--https://iamvdo.me/en/blog/css-font-metrics-line-height-and-vertical-align-->
+<!--line-height 影响文字顶部空间-->
+<!--height 影响文字底部空间-->
+<div class="a">
+  <span class="s1">我</span>
+  <span class="s2">我</span>
+</div>
 </body>
 
-<script>
-
-    debugger
-
-    let str = 'I am a string 是';
-
-    let a = btoa(str);  // a = 'SSBhbSBhIHN0cmluZw=='
-
-    let b = atob(a);  // b = 'I am a string'
-</script>
 </html>
 
