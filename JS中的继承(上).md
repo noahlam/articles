@@ -20,6 +20,8 @@ Student.prototype = new Person()
 我们只要`把子类的prototype设置为父类的实例`,就完成了继承,怎么样? 是不是超级简单? 有没有比Java,C#的清晰?
 事实上,以上就是js里面的**原型链继承**
 
+> 这里为了精简演示, 忽略了`实例的构造函数指向问题`, 设置 `Student.prototype.constructor = Student` 解决。 感谢 @ShuBuShao 大佬指出
+
 当然,通过以上代码,我们的Student只是继承了一个空壳的Person,这样视乎是毫无意义的,我们使用继承的目的,
 就是要通过继承获取父类的内容,那我们先给父类加上一点点简单的内容(新增的地方标记 '// 新增的代码'):
 ```javascript

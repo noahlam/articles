@@ -59,7 +59,7 @@ function Student(){
     SuperType.call(this)
 }
 
-inherit(Student, Student)
+inherit(Student, Person)
  ```   
 我们用 `inherit` 函数替换了 `Student.prototype = new Person() `,从而避免了执行 `new Person()`.
 
